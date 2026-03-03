@@ -20,6 +20,8 @@ public class Livro {
     private Instant dataCadastro;
     private Integer anoPublicacao;
 
+    public Livro(){}
+
     public Livro(Long id, String autor, String titulo, Instant dataCadastro, Integer anoPublicacao) {
         this.id = id;
         this.autor = autor;
