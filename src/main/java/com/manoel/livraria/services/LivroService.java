@@ -43,7 +43,22 @@ public class LivroService {
          Page<Livro> result = repository.findAll(pageable);
          return result.map(x-> new LivroDTO(x));
     }
+    @Transactional
+    public LivroDTO update(Long id, LivroDTO dto){
+        Livro entity = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
+        copyDtoToEntity(dto, entity);
+        entity = repository.save(entity);
+        return new LivroDTO(entity);
+    }
 
+  
+    public void delete(Long id){
+        if(!repository.existsById(id)){
+            throw new RuntimeException("Livro não encontrado");
+        }
+        repository.deleteById(id);
+    }
     private void copyDtoToEntity(LivroDTO dto, Livro entity) {
         entity.setAutor(dto.getAutor());
         entity.setTitulo(dto.getTitulo());
